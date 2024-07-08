@@ -1,0 +1,193 @@
+openapi: 3.0.0
+info:
+  title: Contact API
+  version: 1.0.0
+paths:
+  /contacts:
+    get:
+      summary: Get all contacts
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Contact ID
+                    name:
+                      type: string
+                      description: Contact Name
+                    organization:
+                      type: string
+                      description: Contact Organization
+                    status:
+                      type: string
+                      description: Contact Status
+                    address:
+                      type: string
+                      description: Contact Address
+                    email:
+                      type: string
+                      description: Contact Email
+                    mobile_number:
+                      type: string
+                      description: Contact Mobile Number
+                    assigned_to:
+                      type: string
+                      description: Assigned To
+    post:
+      summary: Create a new contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Contact Name
+                organization:
+                  type: string
+                  description: Contact Organization
+                status:
+                  type: string
+                  description: Contact Status
+                address:
+                  type: string
+                  description: Contact Address
+                email:
+                  type: string
+                  description: Contact Email
+                mobile_number:
+                  type: string
+                  description: Contact Mobile Number
+                assigned_to:
+                  type: string
+                  description: Assigned To
+      responses:
+        '201':
+          description: Contact created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Contact ID
+        '400':
+          description: Invalid request body
+  /contacts/{id}:
+    get:
+      summary: Get a contact by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Contact ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Contact ID
+                  name:
+                    type: string
+                    description: Contact Name
+                  organization:
+                    type: string
+                    description: Contact Organization
+                  status:
+                    type: string
+                    description: Contact Status
+                  address:
+                    type: string
+                    description: Contact Address
+                  email:
+                    type: string
+                    description: Contact Email
+                  mobile_number:
+                    type: string
+                    description: Contact Mobile Number
+                  assigned_to:
+                    type: string
+                    description: Assigned To
+        '404':
+          description: Contact not found
+    put:
+      summary: Update a contact by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Contact ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Contact Name
+                organization:
+                  type: string
+                  description: Contact Organization
+                status:
+                  type: string
+                  description: Contact Status
+                address:
+                  type: string
+                  description: Contact Address
+                email:
+                  type: string
+                  description: Contact Email
+                mobile_number:
+                  type: string
+                  description: Contact Mobile Number
+                assigned_to:
+                  type: string
+                  description: Assigned To
+      responses:
+        '200':
+          description: Contact updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Contact ID
+        '400':
+          description: Invalid request body
+        '404':
+          description: Contact not found
+    delete:
+      summary: Delete a contact by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Contact ID
+      responses:
+        '204':
+          description: Contact deleted successfully
+        '404':
+          description: Contact not found

@@ -1,0 +1,645 @@
+openapi: "3.0.0"
+info:
+  title: "Contact API"
+  version: "1.0.0"
+paths:
+  /mails:
+    get:
+      summary: "Get all mails"
+      tags: 
+        - "request"
+      responses:
+        200:
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Mail ID"
+                    subject:
+                      type: string
+                      description: "Mail Subject"
+                    body:
+                      type: string
+                      description: "Mail Body"
+                    sender:
+                      type: string
+                      description: "Mail Sender"
+                    recipient:
+                      type: string
+                      description: "Mail Recipient"
+                    date_sent:
+                      type: string
+                      format: date-time
+                      description: "Date Sent"
+  /tasks/ongoing:
+    get:
+      summary: "Get ongoing tasks"
+      tags: 
+        - "request"
+      responses:
+        200:
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Task ID"
+                    title:
+                      type: string
+                      description: "Task Title"
+                    description:
+                      type: string
+                      description: "Task Description"
+                    assigned_to:
+                      type: string
+                      description: "Assigned To"
+                    status:
+                      type: string
+                      description: "Task Status"
+                    start_date:
+                      type: string
+                      format: date-time
+                      description: "Start Date"
+                    due_date:
+                      type: string
+                      format: date-time
+                      description: "Due Date"
+  /customers/new:
+    get:
+      summary: "Get new customers"
+      tags: 
+        - "request"
+      responses:
+        200:
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Customer ID"
+                    name:
+                      type: string
+                      description: "Customer Name"
+                    email:
+                      type: string
+                      description: "Customer Email"
+                    phone:
+                      type: string
+                      description: "Customer Phone"
+                    joined_date:
+                      type: string
+                      format: date-time
+                      description: "Date Joined"
+  /requests/closed:
+    get:
+      summary: "Get closed requests"
+      tags: 
+        - "request"
+      responses:
+        200:
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Request ID"
+                    title:
+                      type: string
+                      description: "Request Title"
+                    description:
+                      type: string
+                      description: "Request Description"
+                    status:
+                      type: string
+                      description: "Request Status"
+                    closed_date:
+                      type: string
+                      format: date-time
+                      description: "Closed Date"
+  /contacts:
+    get:
+      summary: "Get all contacts"
+      tags: 
+        - "request"
+      responses:
+        200:
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Contact ID"
+                    name:
+                      type: string
+                      description: "Contact Name"
+                    organization:
+                      type: string
+                      description: "Contact Organization"
+                    status:
+                      type: string
+                      description: "Contact Status"
+                    address:
+                      type: string
+                      description: "Contact Address"
+                    email:
+                      type: string
+                      description: "Contact Email"
+                    mobile_number:
+                      type: string
+                      description: "Contact Mobile Number"
+                    assigned_to:
+                      type: string
+                      description: "Assigned To"
+    post:
+      summary: "Create a new contact"
+      tags: 
+        - "request"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "Contact Name"
+                organization:
+                  type: string
+                  description: "Contact Organization"
+                status:
+                  type: string
+                  description: "Contact Status"
+                address:
+                  type: string
+                  description: "Contact Address"
+                email:
+                  type: string
+                  description: "Contact Email"
+                mobile_number:
+                  type: string
+                  description: "Contact Mobile Number"
+                assigned_to:
+                  type: string
+                  description: "Assigned To"
+      responses:
+        201:
+          description: "Contact created successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "Contact ID"
+        400:
+          description: "Invalid request body"
+  /contacts/{id}:
+    get:
+      summary: "Get a contact by ID"
+      tags: 
+        - "request"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Contact ID"
+      responses:
+        200:
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "Contact ID"
+                  name:
+                    type: string
+                    description: "Contact Name"
+                  organization:
+                    type: string
+                    description: "Contact Organization"
+                  status:
+                    type: string
+                    description: "Contact Status"
+                  address:
+                    type: string
+                    description: "Contact Address"
+                  email:
+                    type: string
+                    description: "Contact Email"
+                  mobile_number:
+                    type: string
+                    description: "Contact Mobile Number"
+                  assigned_to:
+                    type: string
+                    description: "Assigned To"
+        404:
+          description: "Contact not found"
+    put:
+      summary: "Update a contact by ID"
+      tags: 
+        - "request"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Contact ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "Contact Name"
+                organization:
+                  type: string
+                  description: "Contact Organization"
+                status:
+                  type: string
+                  description: "Contact Status"
+                address:
+                  type: string
+                  description: "Contact Address"
+                email:
+                  type: string
+                  description: "Contact Email"
+                mobile_number:
+                  type: string
+                  description: "Contact Mobile Number"
+                assigned_to:
+                  type: string
+                  description: "Assigned To"
+      responses:
+        200:
+          description: "Contact updated successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "Contact ID"
+        400:
+          description: "Invalid request body"
+        404:
+          description: "Contact not found"
+    delete:
+      summary: "Delete a contact by ID"
+      tags: 
+        - "request"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Contact ID"
+      responses:
+        204:
+          description: "Contact deleted successfully"
+        404:
+          description: "Contact not found"
+  /leads:
+    get:
+      summary: Retrieve a list of leads
+      tags:
+        - customer-view
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: A list of leads
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  leads:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "123"
+                        name:
+                          type: string
+                          example: "John Cena"
+                        organization:
+                          type: string
+                          example: "WWE"
+                        job_title:
+                          type: string
+                          example: "Light Weight Champion"
+                        email:
+                          type: string
+                          example: "john.cena@wwe.com"
+                        phone:
+                          type: string
+                          example: "+1 - 421 0981 290"
+                        lead_owner:
+                          type: string
+                          example: "Mr Vince McMahon"
+                        source:
+                          type: string
+                          example: "Pay Per View"
+                        social_info:
+                          type: object
+                          properties:
+                            instagram:
+                              type: string
+                              example: "www.instagram.com/john.cena"
+                            twitter:
+                              type: string
+                              example: "www.twitter.com/john.cena"
+                            facebook:
+                              type: string
+                              example: "www.facebook.com/john.cena"
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        example: 1
+                      limit:
+                        type: integer
+                        example: 10
+                      total:
+                        type: integer
+                        example: 100
+  /leads/{id}:
+    get:
+      summary: Retrieve details of a specific lead
+      tags:
+        - customer-view
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "123"
+      responses:
+        '200':
+          description: Details of the lead
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "123"
+                  name:
+                    type: string
+                    example: "John Cena"
+                  organization:
+                    type: string
+                    example: "WWE"
+                  job_title:
+                    type: string
+                    example: "Light Weight Champion"
+                  email:
+                    type: string
+                    example: "john.cena@wwe.com"
+                  phone:
+                    type: string
+                    example: "+1 - 421 0981 290"
+                  lead_owner:
+                    type: string
+                    example: "Mr Vince McMahon"
+                  source:
+                    type: string
+                    example: "Pay Per View"
+                  activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: "email"
+                        subject:
+                          type: string
+                          example: "Meeting Request"
+                        body:
+                          type: string
+                          example: "Hello Mr Akbar, I am really interested in your business. Can you schedule a meeting and provide us with a Demo on 2nd July at 10:00 AM (PST)?"
+                        date:
+                          type: string
+                          format: date-time
+                          example: "2024-06-25T10:00:00Z"
+                        duration:
+                          type: string
+                          example: "1 hour 21 seconds"
+                        notes:
+                          type: string
+                          example: "Discussed project details."
+                  social_info:
+                    type: object
+                    properties:
+                      instagram:
+                        type: string
+                        example: "www.instagram.com/john.cena"
+                      twitter:
+                        type: string
+                        example: "www.twitter.com/john.cena"
+                      facebook:
+                        type: string
+                        example: "www.facebook.com/john.cena"
+    put:
+      summary: Update the information of a specific lead
+      tags:
+        - customer-view
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lead:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "John Cena"
+                    organization:
+                      type: string
+                      example: "WWE"
+                    job_title:
+                      type: string
+                      example: "Heavy Weight Champion"
+                    email:
+                      type: string
+                      example: "john.cena@wwe.com"
+                    phone:
+                      type: string
+                      example: "+1 - 421 0981 291"
+                    lead_owner:
+                      type: string
+                      example: "Mr Vince McMahon"
+                    source:
+                      type: string
+                      example: "Direct"
+                    social_info:
+                      type: object
+                      properties:
+                        instagram:
+                          type: string
+                          example: "www.instagram.com/john.cena"
+                        twitter:
+                          type: string
+                          example: "www.twitter.com/john.cena"
+                        facebook:
+                          type: string
+                          example: "www.facebook.com/john.cena"
+      responses:
+        '200':
+          description: Lead information updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Lead information updated successfully."
+  /leads/{id}/activities:
+    post:
+      summary: Add a new activity to a lead
+      tags:
+        - customer-view
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activity:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      example: "call"
+                    subject:
+                      type: string
+                      example: "Follow-up Call"
+                    body:
+                      type: string
+                      example: "Discussed the project timeline."
+                    date:
+                      type: string
+                      format: date-time
+                      example: "2024-07-01T14:00:00Z"
+                    duration:
+                      type: string
+                      example: "30 minutes"
+                    notes:
+                      type: string
+                      example: "Scheduled a follow-up meeting for next week."
+      responses:
+        '200':
+          description: Activity added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Activity added successfully."
+  /leads/{id}/convert:
+    post:
+      summary: Convert a lead to a deal
+      tags:
+        - customer-view
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "123"
+      responses:
+        '200':
+          description: Lead converted to deal successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Lead converted to deal successfully."
