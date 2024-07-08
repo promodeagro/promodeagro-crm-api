@@ -1,0 +1,171 @@
+service: contact-api
+
+plugins:
+  - serverless-offline
+
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  environment:
+    CONTACTS_TABLE: ${self:service}-${self:provider.stage}-contacts
+    MAILS_TABLE: ${self:service}-${self:provider.stage}-mails
+    TASKS_TABLE: ${self:service}-${self:provider.stage}-tasks
+    CUSTOMERS_TABLE: ${self:service}-${self:provider.stage}-customers
+    REQUESTS_TABLE: ${self:service}-${self:provider.stage}-requests
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: 
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CONTACTS_TABLE}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.MAILS_TABLE}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TASKS_TABLE}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CUSTOMERS_TABLE}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.REQUESTS_TABLE}
+
+functions:
+  getContacts:
+    handler: handlers/getCustomer.getContacts
+    events:
+      - http:
+          path: get_contacts
+          method: get
+
+  createCustomer:
+    handler: handlers/createCustomer.createCustomer
+    timeout: 30
+    events:
+      - http:
+          path: create_contacts
+          method: post
+
+  getContactById:
+    handler: handlers/getContactById.getContactById
+    events:
+      - http:
+          path: get_contact/{id}
+          method: get
+
+  updateCustomer:
+    handler: handlers/updateCustomer.updateCustomer 
+    events:
+      - http:
+          path: update_contacts/{id}
+          method: put
+
+  deleteContactById:
+    handler: handlers/deleteContactById.deleteContactById
+    events:
+      - http:
+          path: delete_contacts_id/{id}
+          method: delete
+
+  getAllEmails:
+    handler: handlers/getAllEmails.getAllEmails
+    events:
+      - http:
+          path: get_all_emails
+          method: get
+
+  getOngoingTasks:
+    handler: handlers/getOngoingTasks.getOngoingTasks
+    events:
+      - http:
+          path: tasks/ongoing
+          method: get
+
+  getNewCustomers:
+    handler: handlers/getNewCustomers.getNewCustomers
+    events:
+      - http:
+          path: customers/new
+          method: get
+
+  
+  getClosedRequests:
+    handler: handler.getClosedRequests
+    events:
+      - http:
+          path: requests/closed
+          method: get
+
+resources:
+  Resources:
+    ContactsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CONTACTS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    MailsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.MAILS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    TasksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.TASKS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    CustomersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CUSTOMERS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    RequestsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.REQUESTS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
